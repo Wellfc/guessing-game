@@ -53,29 +53,35 @@ onEvent('click', replayButton, function() {
 
 function checkGuess() {
     const userValue = Number(guess.value);
-    attempts++;
-
-    if (userValue === randomNumber) {
-        hint.textContent = `Congratulations, you guessed it on ${attempts} attemps!`;
-        submit.style.display = "none";
-        replayButton.style.display = "inline-block";
-    } else if (userValue < randomNumber) {
-        hint.textContent = `${userValue} is too low! Try again.`;
-        guess.value = '';
+    
+    if (userValue >= 1 && userValue <= 100) {
+        attempts++;
+    
+        if (userValue === randomNumber) {
+            hint.textContent = `Congratulations, you guessed it on ${attempts} attemps!`;
+            submit.style.display = "none";
+            replayButton.style.display = "inline-block";
+        } else if (userValue < randomNumber) {
+            hint.textContent = `${userValue} is too low! Try again.`;
+            guess.value = '';
+        } else {
+            hint.textContent = `${userValue} is too high! Try again.`;
+            guess.value = '';
+        }
+    
+        attemptsText.textContent = `Attempts: ${attempts}`;
     } else {
-        hint.textContent = `${userValue} is too high! Try again.`;
+        hint.textContent = "Please enter a valid number between 1 and 100";
         guess.value = '';
     }
-
-    attemptsText.textContent = `Attempts: ${attempts}`;
 }
 
 function restartGame() {
     attempts = 0;
     randomNumber = Math.floor(Math.random() * 100 + 1);
-    guess.value = '';
     hint.textContent = '';
     attemptsText.textContent = '';
     replayButton.style.display = "none";
     submit.style.display = "inline-block";
+    guess.value = '';
 }
