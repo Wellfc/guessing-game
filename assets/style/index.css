@@ -4,8 +4,7 @@
  --app-dark-bg: #181621;
  --app-dark-gray-bg: #242329;
  --app-white: #fff;
- --app-red: #ff3c57;
- --app-red-hover: #d91e4a;
+ --app-mystycal-purple: #800080;
  --app-blue: #3c57ff;
  --app-blue-hover: #364ee6;
 }
@@ -18,20 +17,26 @@
 }
  
 body {
- background-color: var(--app-white);
- 
+ background-color: var(--app-mystycal-purple);
+ color: var(--app-white);
 }
  
+main {
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+
 .container {
- width: min(100% - 30px, 1080px);
- margin-inline: auto;
+  width: min(100% - 60px, 1200px);
+  margin-inline: auto;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/* Main */
+/* Main                                                  */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
  
-.container {
+.game-container {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -53,6 +58,7 @@ button {
     color: #fff;
     border: none;
     border-radius: 4px;
+    transition: all 0.25s ease-in-out;
 }
 
 input::-webkit-outer-spin-button,
@@ -72,5 +78,15 @@ input:focus {
 button:hover {
     cursor: pointer;
     background-color: #2c10bb;
+}
+
+.replay-button {
+ position: absolute;
+ top: 60px;
+ right: 60px;
+}
+
+#replay-btn {
+    display: none;
 }
 
