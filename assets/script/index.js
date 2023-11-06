@@ -40,6 +40,13 @@ onEvent('click', submit, function() {
     checkGuess();
 });
 
+onEvent('keyup', document, function (event) {
+    if (submit.style.display !== 'none' && event.key === 'Enter') {
+        checkGuess();
+        print('Enter key pressed');
+    }
+});
+
 onEvent('click', replayButton, function() {
     restartGame();
 });
@@ -50,6 +57,7 @@ function checkGuess() {
 
     if (userValue === randomNumber) {
         hint.textContent = `Congratulations, you guessed it on ${attempts} attemps!`;
+        submit.style.display = "none";
         replayButton.style.display = "inline-block";
     } else if (userValue < randomNumber) {
         hint.textContent = `${userValue} is too low! Try again.`;
@@ -63,10 +71,11 @@ function checkGuess() {
 }
 
 function restartGame() {
-    let attempts = 0;
-    let randomNumber = Math.floor(Math.random() * 100 + 1);
+    attempts = 0;
+    randomNumber = Math.floor(Math.random() * 100 + 1);
     guess.value = '';
     hint.textContent = '';
     attemptsText.textContent = '';
     replayButton.style.display = "none";
+    submit.style.display = "inline-block";
 }
