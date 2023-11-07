@@ -71,7 +71,6 @@ function checkGuess() {
         attempsLeft--;
         attemptsText.textContent = `Attempts: ${attempts}`;
         attempsLeftText.textContent = attempsLeft;
-        print(attempsLeftText.textContent);
 
         if (attempts >= 7) {
             gameOver();
