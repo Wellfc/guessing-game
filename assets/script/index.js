@@ -28,7 +28,7 @@ function print(...args) {
 /* Variables */
 
 let attempts = 0;
-let attempsLeft = 7;
+let attemptsLeft = 7;
 let randomNumber = Math.floor(Math.random() * 100 + 1);
 
 const guess = select('.guess');
@@ -36,7 +36,7 @@ const submit = select('.submit');
 const hint = select('.hint');
 const attemptsText = select('.attempts');
 const replayButton = select('#replay-btn');
-const attempsLeftText = select('.attemps-left');
+const attemptsLeftText = select('.attemps-left');
 
 onEvent('click', submit, function() {
     checkGuess();
@@ -68,12 +68,15 @@ function checkGuess() {
             guess.value = '';
         }
     
-        attempsLeft--;
-        attemptsText.textContent = `Attempts: ${attempts}`;
-        attempsLeftText.textContent = attempsLeft;
-
         if (attempts >= 7) {
             gameOver();
+            attemptsLeft--;
+            attemptsText.textContent = `Attempts: ${attempts}`;
+            attemptsLeftText.textContent = attemptsLeft;
+        } else {
+            attemptsLeft--;
+            attemptsText.textContent = `Attempts: ${attempts}`;
+            attemptsLeftText.textContent = attemptsLeft;
         }
 
     } else {
@@ -83,7 +86,7 @@ function checkGuess() {
 }
 
 function gameOver() {
-    if (attempsLeft >= 1) {
+    if (attemptsLeft > 0) {
         hint.textContent = `Congratulations You Win!\n 
                             you guessed it on ${attempts} attemps!\n
                             Click the restart button to play again!`;
@@ -107,8 +110,8 @@ function restartGame() {
     attemptsText.textContent = '';
     replayButton.style.display = "none";
     submit.style.display = "inline-block";
-    attempsLeft = 7;
-    attempsLeftText.textContent = attempsLeft;
+    attemptsLeft = 7;
+    attemptsLeftText.textContent = attemptsLeft;
     guess.disabled = false;
     guess.value = '';
 }
