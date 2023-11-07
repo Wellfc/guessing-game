@@ -28,6 +28,7 @@ function print(...args) {
 /* Variables */
 
 let attempts = 0;
+let attempsLeft = 7;
 let randomNumber = Math.floor(Math.random() * 100 + 1);
 
 const guess = select('.guess');
@@ -35,6 +36,7 @@ const submit = select('.submit');
 const hint = select('.hint');
 const attemptsText = select('.attempts');
 const replayButton = select('#replay-btn');
+const attempsLeftText = select('.attemps-left');
 
 onEvent('click', submit, function() {
     checkGuess();
@@ -43,7 +45,6 @@ onEvent('click', submit, function() {
 onEvent('keyup', document, function (event) {
     if (submit.style.display !== 'none' && event.key === 'Enter') {
         checkGuess();
-        print('Enter key pressed');
     }
 });
 
@@ -58,9 +59,7 @@ function checkGuess() {
         attempts++;
     
         if (userValue === randomNumber) {
-            hint.textContent = `Congratulations, you guessed it on ${attempts} attemps!`;
-            submit.style.display = "none";
-            replayButton.style.display = "inline-block";
+            gameOver();
         } else if (userValue < randomNumber) {
             hint.textContent = `${userValue} is too low! Try again.`;
             guess.value = '';
@@ -69,19 +68,48 @@ function checkGuess() {
             guess.value = '';
         }
     
+        attempsLeft--;
         attemptsText.textContent = `Attempts: ${attempts}`;
+        attempsLeftText.textContent = attempsLeft;
+        print(attempsLeftText.textContent);
+
+        if (attempts >= 7) {
+            gameOver();
+        }
+
     } else {
         hint.textContent = "Please enter a valid number between 1 and 100";
         guess.value = '';
     }
 }
 
+function gameOver() {
+    if (attempsLeft >= 1) {
+        hint.textContent = `Congratulations You Win!\n 
+                            you guessed it on ${attempts} attemps!\n
+                            Click the restart button to play again!`;
+        hint.style.color = '#24f024';
+    } else {
+        hint.textContent = `You lose! The correct number was ${randomNumber}!\n
+                            Click the restart button to play again!`;
+        hint.style.color = '#f83d18';
+    }
+
+    guess.disabled = true;
+    submit.style.display = "none";
+    replayButton.style.display = "inline-block";
+}
+
 function restartGame() {
     attempts = 0;
     randomNumber = Math.floor(Math.random() * 100 + 1);
     hint.textContent = '';
+    hint.style.color = '#fff'
     attemptsText.textContent = '';
     replayButton.style.display = "none";
     submit.style.display = "inline-block";
+    attempsLeft = 7;
+    attempsLeftText.textContent = attempsLeft;
+    guess.disabled = false;
     guess.value = '';
 }

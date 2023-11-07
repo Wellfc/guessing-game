@@ -52,6 +52,14 @@ input {
     text-align: center;
 }
 
+.attemps-left {
+    color: #24f024;
+}
+
+.hint {
+    white-space: pre-line;
+}
+
 button {
     padding: 10px 20px;
     background-color: #000;
