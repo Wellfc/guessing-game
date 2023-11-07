@@ -54,33 +54,41 @@ onEvent('click', replayButton, function() {
 
 function checkGuess() {
     const userValue = Number(guess.value);
-
+    let isWin = false;
+    
     if (userValue >= 1 && userValue <= 100) {
+    
         attempts++;
 
-        if (userValue === randomNumber || attempts >= 7) {
-            gameOver();
+        if (userValue === randomNumber) {
+            isWin = true;
+            gameOver(isWin);
         } else if (userValue < randomNumber) {
             hint.textContent = `${userValue} is too low! Try again.`;
         } else {
             hint.textContent = `${userValue} is too high! Try again.`;
         }
+    
+        if (attempts >= 7 && !isWin) {
+            gameOver(isWin);
+        } else {
+            attemptsLeft = 7 - attempts;
+            attemptsText.textContent = `Attempts: ${attempts}`;
+            attemptsLeftText.textContent = attemptsLeft;
+        }
 
-        attemptsLeft = 7 - attempts;
-
-        attemptsText.textContent = `Attempts: ${attempts}`;
-        attemptsLeftText.textContent = attemptsLeft;
         guess.value = '';
+
     } else {
         hint.textContent = "Please enter a valid number between 1 and 100";
         guess.value = '';
     }
 }
 
-function gameOver() {
-    if (attemptsLeft > 1) {
+function gameOver(isWin) {
+    if (isWin) {
         hint.textContent = `Congratulations You Win!\n 
-                            you guessed it on ${attempts} attemps!\n
+                            You guessed it on ${attempts} attemps!\n
                             Click the restart button to play again!`;
         hint.style.color = '#24f024';
     } else {
